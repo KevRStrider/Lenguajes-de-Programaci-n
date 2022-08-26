@@ -12,7 +12,7 @@
   (test-case "insertL"
     (check-equal? (insertL 'x 'y '(x z z x y x))
                   '(y x z z y x y y x)))
-#|  
+  
   (test-case "remv-1st"
     (check-equal? (remv-1st 'x '(x y z x))
                   '(y z x))
@@ -20,7 +20,7 @@
                   '(x z y x))
     (check-equal? (remv-1st 'z '(a b c))
                   '(a b c)))
-|#  
+ 
   (test-case "map"
     (check-equal? (map sub1 '(1 2 3 4))
                   '(0 1 2 3)))
@@ -36,11 +36,11 @@
                   '((1 . a) (2 . b) (3 . c)))
     (check-equal? (zip '(1 2 3) '(a b c d e f))
                   '((1 . a) (2 . b) (3 . c))))
- #| 
+ 
   (test-case "list-index-ofv"
     (check-eqv? (list-index-ofv 'x '(x y z x x)) 0)
     (check-eqv? (list-index-ofv 'x '(y z x x)) 2))
- |# 
+  
   (test-case "append"
     (check-equal? (append '(42 120) '(1 2 3))
                   '(42 120 1 2 3))
@@ -54,7 +54,7 @@
   (test-case "repeat"
     (check-equal? (repeat '(4 8 11) 4)
                   '(4 8 11 4 8 11 4 8 11 4 8 11)))
-  #|
+  
   (test-case "same-lists*"
     (check-true (same-lists* '() '()))
     (check-true (same-lists* '(1 2 3 4 5) '(1 2 3 4 5)))
@@ -90,14 +90,14 @@
                 10)
     (check-eqv? (foldr * 1 '(1 2 3 4))
                 24))
-  |#
+  
   
   (test-case "powerset"
     (check-equal? (powerset '(3 2 1))
                   '((3 2 1) (3 2) (3 1) (3) (2 1) (2) (1) ()))
     (check-equal? (powerset '())
                   '(()))))
-  #|
+  
   (test-case "cartesian-product"
     (check-equal? (cartesian-product '((5 4) (3 2 1)))
                   '((5 3) (5 2) (5 1) (4 3) (4 2) (4 1))))
@@ -111,6 +111,6 @@
     (let ((ns (make-base-namespace)))
       (check-equal? (eval quine ns) quine)
       (check-equal? (eval (eval quine ns) ns) quine))))
-|#
+
 
 (run-tests pruebas 'verbose)
