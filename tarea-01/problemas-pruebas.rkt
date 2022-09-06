@@ -96,7 +96,7 @@
     (check-equal? (powerset '(3 2 1))
                   '((3 2 1) (3 2) (3 1) (3) (2 1) (2) (1) ()))
     (check-equal? (powerset '())
-                  '(()))))
+                  '(())))
   
   (test-case "cartesian-product"
     (check-equal? (cartesian-product '((5 4) (3 2 1)))
