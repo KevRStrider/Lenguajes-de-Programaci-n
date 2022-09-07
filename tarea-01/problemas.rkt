@@ -44,6 +44,10 @@
       '()
       (cons (cons (first l1) (first l2)) (zip (rest l1) (rest l2)))))
 
+;; 7.
+(define (list-index-ofv x ls)
+  'fallé-mamá)
+
 ;; 8.
 (define (append ls1 ls2)
   (cond
@@ -63,7 +67,31 @@
   (if (equal? n 1)
       ls
       (append ls (repeat ls (sub1 n)))))
-      
+;; 11.
+(define (same-lists* ls1 ls2)
+  'fallé-mamá)
+
+;; 12.
+(define (binary->natural ls)
+  'fallé-mamá)
+
+;; 14.
+(define (div a b)
+  'falle-mama)
+
+;; 15.
+(define (append-map fn ls)
+  'falle-mama)
+
+;; 16.
+(define (set-difference s1 s2)
+  'falle-mama)
+
+;; 17.
+(define (foldr op a ls)
+  'falle-mama)
+
+
 ;; 18.
 (define (powerset ls)
   (if (empty? ls)
@@ -76,5 +104,11 @@
       ls
       (cons (cons x (first ls))
             (f x (rest ls)))))
+
+;; 21.
+(define (snowball f)
+  'falle-mama)
+(define (quine)
+  'idk)
 
 (provide (all-defined-out))
