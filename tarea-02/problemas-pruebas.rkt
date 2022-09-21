@@ -16,8 +16,6 @@
                            '())
              (check-equal? (bundle '("a" "b" "c") 4)
                            (list "abc"))
-             (check-exn exn:fail? (thunk (bundle '("") 3)))
-             (check-exn exn:fail? (thunk (bundle (explode "abcdefgh") 0))))
 
   (test-case "take"
              (check-equal? (take '(a b c d e) 3)
