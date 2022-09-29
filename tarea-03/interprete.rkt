@@ -118,8 +118,7 @@
     [(appC func arg)
      (let ([f (interp-helper func env)])
        (if (funV? f)
-           (let ([nenv (cons (binding (funV-param f) (interp-helper arg env)) (funV-e f))])
-             (interp-helper (funV-body f) nenv))
+           (interp-helper (funV-body f) (extend-env (funV-param f) (interp-helper arg env) (funV-e f)))
            (bad-arg-to-app-error f)))]))
        
                  
