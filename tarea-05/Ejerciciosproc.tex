@@ -1,0 +1,106 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[spanish]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{fancyvrb}
+
+\title{Your Paper}
+\author{Kevin David Ruiz González}
+
+\begin{document}
+\maketitle
+
+\section{Exercise 3.20 [*] }
+In PROC, procedures have only one argument, but one can get the effect of multiple argument procedures by using procedures that return other procedures. For example, one might write code like
+
+\begin{Verbatim}
+let f = proc (x) proc (y) ...
+in ((f 3) 4) 
+\end{Verbatim}
+This trick is called Currying, and the procedure is said to be Curried. Write a Curried procedure that takes two arguments and returns their sum. You can write x + y in our language by writing $-(x,-(0,y))$ .
+\begin{Verbatim}
+let sum = proc (x) proc (y) -(x,-(0,y))
+\end{Verbatim}
+
+
+\section{Exercise 3.23 [**] }
+What is the value of the following PROC program?
+\begin{Verbatim}
+let makemult = proc (maker)
+                proc (x)
+                    if zero?(x)
+                    then 0
+                    else -(((maker maker) -(x,1)), -4)
+in let times4 = proc (x) ((makemult makemult) x)
+    in (times4 3)
+\end{Verbatim}
+Use the tricks of this program to write a procedure for factorial in PROC. As a hint,
+remember that you can use Currying (exercise 3.20) to define a two-argument procedure times.
+El resultado del programa es 12 porque repetirá el mismo proceso x veces, que en este caso es 3, aumentando en 4 el resultado por cada iteración. 
+
+Sintáxis concreta:
+\begin{Verbatim}
+let maketimes = proc (maker)
+                  proc (x)
+                    proc (y)
+                      if zero?(x)
+                      then 0
+                      else -((((maker maker) -(x, 1)) y), -(0, y))
+in let times = (maketimes maketimes)
+   in let makefact = proc (maker)
+                       proc (x)
+                         if zero?(x)
+                         then 1
+                         else ((times x) ((maker maker) -(x, 1)))
+      in (makefact makefact)
+\end{Verbatim}
+\section{Exercise 3.25 [*] }
+The tricks of the previous exercises can be generalized to show that we can define any recursive procedure in PROC. Consider the following bit of code:
+
+\begin{Verbatim}
+let makerec = proc (f)
+                    let d = proc (x)
+                                 proc (z) ((f (x x)) z)
+                    in proc (n) ((f (d d)) n)
+in let maketimes4 = proc (f)
+                        proc (x)
+                            if zero?(x)
+                            then 0
+                            else -((f -(x,1)), -4)
+    in let times4 = (makerec maketimes4)
+        in (times4 3)
+\end{Verbatim}
+Show that it returns 12 \\*
+El procedimiento makestimes4 toma un procedimiento times4 y devuelve un procedimiento times4. Entonces para esto convertimos maketimes4 a un procedimiento maker, que tomará un maker y devolverá un procedimiento times4 que será un contador. 
+
+\begin{Verbatim}
+let makerec = proc (f)
+  let maker = proc (maker)
+                let recursive-proc = (maker maker)
+                in (f recursive-proc) x)
+    in (maker maker) 
+\end{Verbatim}
+\section{Exercise 3.27 [*]}
+Add a new kind of procedure called a traceproc to the language. A traceproc works exactly like a proc, except that it prints a trace message on
+entry and on exit.
+\begin{Verbatim}
+Sintáxis Concreta
+Expression:== traceproc (Identifier) Expression
+Sintáxis Abstracta
+(traceproc-exp var body)
+
+Semántica:
+(value-of (traceproc-exp var body) env) 
+    = (trace (proc-val (procedure var body env) 
+\end{Verbatim}
+\end{document}
