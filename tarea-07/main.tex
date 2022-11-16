@@ -1,0 +1,62 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[spanish]{babel}
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{fancyvrb}
+
+\title{Lenguaje Let}
+\author{Kevin Ruiz}
+\date{}
+\begin{document}
+\maketitle
+
+\section{Sintáxis concreta}
+\emph{Expression := Number} \\
+\emph{Expression := -(Expression, Expression)}\\
+\emph{Expression := zero? (Expression)}\\
+\emph{Expression := if Expression then Expression else Expression}\\
+\emph{Expression := Identifier}\\
+\emph{Expression := let Identifier = Expression in Expression} \\
+\section{Sintáxis abstracta}
+(const-exp num)\\
+(diff-exp exp1 exp2)\\
+(zero?-exp exp1)\\
+(if-exp exp1 exp2 exp3)\\
+(var-exp var)\\
+(let-exp var exp1 body)\\
+
+\section{Semántica}
+\begin{Verbatim}
+(value-of (const-exp n) env) = (num-val n)
+    
+    (value-of (var-exp var) env) = env(var)
+    
+    (value-of (diff-exp exp1 exp2) env)
+      = (num-val (- (expval->num (value-of exp1 env))
+                    (expval->num (value-of exp2 env))))
+                    
+    (value-of (zero?-exp exp1) env)
+      = (let ([val1 (value-of exp1 env)])
+           (bool-val (= 0 (expval->num val1))))
+           
+    (value-of (if-exp exp1 exp2 exp3) env)
+      = (if (expval->bool (value-of exp1 env))
+            (value-of exp2 env)
+            (value-of exp3 env))
+    
+    (value-of (let-exp var exp1 body) env)
+      = (let ([val1 (value-of exp1 env)])
+           (value-of body [var = val1]env))
+\end{Verbatim}
+
+
+\end{document}
